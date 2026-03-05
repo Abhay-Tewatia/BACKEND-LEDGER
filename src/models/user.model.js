@@ -22,14 +22,21 @@ const userSchema = new mongoose.Schema(
       minlength: [3, "Name must be at least 3 characters long"],
       maxlength: [50, "Name must be less than 50 characters long"]
     },
-
     password: {
       type: String,
       required: [true, "Password is required for creating an account"],
       minlength: [6, "Password must be at least 6 characters long"],
       select: false
+    },
+
+    systemUser : {
+      type : Boolean,
+      default : false,
+        immutable : true,
+        select : false
     }
   },
+   
   {
     timestamps: true
   }

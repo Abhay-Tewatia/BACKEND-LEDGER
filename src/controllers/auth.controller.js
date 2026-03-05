@@ -1,5 +1,6 @@
 const UserModel = require("../models/user.model");
 const jwt = require("jsonwebtoken");
+const emailServices = require("../services/email.services");
 
 /*User Register Controller */
 async function userRegisterController(req, res) {
@@ -22,6 +23,11 @@ async function userRegisterController(req, res) {
       password,
       name
     });
+
+    // 🔥 EMAIL LOCATION FIXED (moved inside try, before return)
+    emailServices
+      .sendRegistrationEmail(user.email, user.name)
+      .catch(err => console.error("Email error:", err));
 
     // Generate token
     const token = jwt.sign(
@@ -119,8 +125,6 @@ async function userLoginController(req, res) {
     });
   }
 }
-
-
 
 module.exports = {
   userRegisterController,
